@@ -1,0 +1,10 @@
+# Pre-rendered quote images (generate locally with quote_to_image.php)
+images/
+
+# Linux Libertine fonts (download separately)
+*.ttf
+
+# Runtime files
+clockisticking
+timelit.log
+timelit.log.tmp
