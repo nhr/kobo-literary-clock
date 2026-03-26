@@ -12,7 +12,7 @@ This project is a port of the [Literary Clock Made From an E-Reader](https://www
 
 ### Development machine (image generation)
 
-- PHP with GD and Imagick extensions
+- Python 3 with [Pillow](https://python-pillow.org/)
 - [Linux Libertine](https://libertine-fonts.org/) fonts: `LinLibertine_RZ.ttf`, `LinLibertine_RB.ttf`, `LinLibertine_RZI.ttf`
 
 ### Kobo Clara HD
@@ -27,7 +27,8 @@ This project is a port of the [Literary Clock Made From an E-Reader](https://www
 Place the three Linux Libertine `.ttf` files in this directory, then run:
 
 ```
-php quote_to_image.php
+pip install -r requirements.txt
+python3 quote_to_image.py
 ```
 
 This reads `litclock_annotated.csv` and generates ~2,880 grayscale PNG images (1072x1448, 300ppi) into `images/` and `images/metadata/`.
@@ -93,8 +94,8 @@ When launched from NickelMenu, the app:
 | File | Description |
 |---|---|
 | `litclock_annotated.csv` | Pipe-delimited quote database (time, time string, quote, title, author) |
-| `quote_to_image.php` | Generates 1072x1448 grayscale PNGs from the quote database |
-| `timetest.php` | Parses raw quotes and extracts time references |
+| `quote_to_image.py` | Generates 1072x1448 grayscale PNGs from the quote database |
+| `requirements.txt` | Python dependencies (Pillow) |
 | `scripts/startstopClock.sh` | Entry point — launched by NickelMenu, starts `clock_main.sh` |
 | `scripts/clock_main.sh` | Main process — manages Nickel lifecycle and runs the display loop |
 | `scripts/timelit.sh` | Picks a random quote for the current minute and displays it |
@@ -105,7 +106,7 @@ When launched from NickelMenu, the app:
 
 The image dimensions (1072x1448) and touch input device (`/dev/input/event1`) are specific to the Clara HD. To adapt for another model:
 
-- Update `$width` and `$height` in `quote_to_image.php` and regenerate images
+- Update `WIDTH` and `HEIGHT` in `quote_to_image.py` and regenerate images
 - Check the correct touch input device path in `showMetadata.sh`
 - Verify FBInk works on your device
 

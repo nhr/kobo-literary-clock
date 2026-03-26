@@ -8,3 +8,4 @@ images/
 clockisticking
 timelit.log
 timelit.log.tmp
+__pycache__/
