@@ -48,8 +48,8 @@ echo unlock > /sys/power/state-extended 2>/dev/null
 # clear display
 $FBINK -c
 
-# start touch handler in background
-sh "$BASEDIR/scripts/showMetadata.sh" > /dev/null 2>&1 &
+# start touch/gesture handler in background
+sh "$BASEDIR/scripts/inputHandler.sh" > /dev/null 2>&1 &
 
 echo "Entering clock loop" >> "$LOG"
 
