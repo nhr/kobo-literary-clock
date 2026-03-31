@@ -3,8 +3,13 @@
 BASEDIR="/mnt/onboard/.adds/timelit"
 LOG="$BASEDIR/timelit.log"
 
-# if already running, do nothing (user can't reach NickelMenu anyway)
-test -f "$BASEDIR/clockisticking" && exit
+# clean up stale clockisticking from an unclean shutdown
+if test -f "$BASEDIR/clockisticking"; then
+	if pgrep -f "clock_main.sh" > /dev/null 2>&1; then
+		exit
+	fi
+	rm -f "$BASEDIR/clockisticking"
+fi
 
 # mark as running immediately, before Nickel dies
 touch "$BASEDIR/clockisticking"
