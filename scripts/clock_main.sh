@@ -45,11 +45,24 @@ rm -f /tmp/nickel-hardware-status
 # prevent the device from going to sleep
 echo unlock > /sys/power/state-extended 2>/dev/null
 
+# let the framebuffer settle after Nickel exits
+sleep 2
+
+# set initial brightness to 30%
+for path in /sys/class/backlight/mxc_msp430.0 /sys/class/backlight/lm3630a_led; do
+	if [ -f "$path/brightness" ]; then
+		bmax=$(cat "$path/max_brightness" 2>/dev/null || echo 100)
+		echo $((bmax * 30 / 100)) > "$path/brightness"
+		echo "brightness set to 30% ($((bmax * 30 / 100))/$bmax)" >> "$LOG"
+		break
+	fi
+done
+
 # clear display
 $FBINK -c
 
-# start touch handler in background
-sh "$BASEDIR/scripts/showMetadata.sh" > /dev/null 2>&1 &
+# start touch/gesture handler in background
+sh "$BASEDIR/scripts/inputHandler.sh" > /dev/null 2>&1 &
 
 echo "Entering clock loop" >> "$LOG"
 

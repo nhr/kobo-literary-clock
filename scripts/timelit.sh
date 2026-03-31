@@ -13,6 +13,7 @@ MinuteOTheDay="$(date +"%H%M")"
 IMGLIST=$(ls "$BASEDIR/images/quote_${MinuteOTheDay}_"*.png 2>/dev/null)
 
 if [ -z "$IMGLIST" ]; then
+	echo "no images for $MinuteOTheDay" >&2
 	exit
 fi
 
@@ -22,5 +23,6 @@ ThisMinuteImage=$(echo "$IMGLIST" | awk 'BEGIN{srand()}{a[NR]=$0}END{print a[int
 echo "$ThisMinuteImage" > "$BASEDIR/clockisticking"
 
 # clear the screen and show the image
+echo "displaying $ThisMinuteImage" >&2
 $FBINK -c
 $FBINK -g file="$ThisMinuteImage"
